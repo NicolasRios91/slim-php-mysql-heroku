@@ -21,10 +21,10 @@ require_once './controllers/UsuarioController.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-// Instantiate App commit de test
+// Instantiate App
 $app = AppFactory::create();
 
-// Add error middleware
+// Add error middleware test de heroku
 $app->addErrorMiddleware(true, true, true);
 
 // Add parse body
