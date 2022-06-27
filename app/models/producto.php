@@ -1,8 +1,21 @@
 <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
 require_once './utils/producto.php';
-class Producto
+class Producto extends Model
 {
-    public $id;
+    protected $primaryKey = 'id';
+    protected $table = 'productos';
+    public $incrementing = true;
+    public $timestamps = false;
+    protected $fillable = [
+        'descripcion', 'sector', 'precio', 'tipo'
+    ];
+}
+ /*    public $id;
     public $descripcion;
     public $sector;
     public $precio;
@@ -62,3 +75,4 @@ class Producto
         return $consulta->fetchObject('Producto');
     }
 }
+ */

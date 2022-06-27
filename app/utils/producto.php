@@ -1,9 +1,6 @@
 <?php
 
-const COCINA = 'cocina';
-const BARRA = 'barra';
-const PATIO = 'patio';
-const CANDY_BAR = 'postres';
+require_once './utils/usuario.php';
 
 const COMIDA = 'comida';
 const BEBIDA = 'bebida';

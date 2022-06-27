@@ -1,4 +1,24 @@
 <?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Usuario extends Model
+{
+    protected $primaryKey = 'id';
+    protected $table = 'usuarios';
+    public $incrementing = true;
+    public $timestamps = false;
+    protected $fillable = [
+        'nombre', 'apellido', 'clave', 'tipo',
+        'sector', 'estado', 'fecha_de_ingreso',
+    ];
+}
+
+/* 
+
 require_once './utils/usuario.php';
 class Usuario
 {
@@ -7,6 +27,7 @@ class Usuario
     public $apellido;
     public $clave;
     public $tipo;
+    public $sector;
     public $estado;
     public $fecha_de_ingreso;
 
@@ -14,7 +35,7 @@ class Usuario
     {
     }
 
-    public static function crearUsuario($nombre, $apellido, $clave, $tipo, $fecha_de_ingreso)
+    public static function crearUsuario($nombre, $apellido, $clave, $tipo, $sector, $fecha_de_ingreso)
     {
         $usuario = new Usuario();
         $usuario->nombre = $nombre;
@@ -22,6 +43,11 @@ class Usuario
         $usuario->clave = $clave;
         if (validarUsuario($tipo)) {
             $usuario->tipo = $tipo;
+        } else {
+            return null;
+        }
+        if (validarSector($sector)) {
+            $usuario->sector = $sector;
         } else {
             return null;
         }
@@ -33,16 +59,15 @@ class Usuario
     public function guardarUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, clave, tipo, estado, fecha_de_ingreso) VALUES (:nombre, :apellido, :clave, :tipo, :estado, :fecha_de_ingreso)");
-        //$claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, clave, tipo, sector, estado, fecha_de_ingreso) VALUES (:nombre, :apellido, :clave, :tipo, :sector, :estado, :fecha_de_ingreso)");
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
+        $consulta->bindValue(':sector', $this->sector, PDO::PARAM_STR);
         $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->bindValue(':fecha_de_ingreso', $this->fecha_de_ingreso, PDO::PARAM_STR);
         $consulta->execute();
-        //todo agregar validacion
         return $objAccesoDatos->obtenerUltimoId();
     }
 
@@ -83,5 +108,4 @@ class Usuario
         $consulta->bindValue(':id', $usuario, PDO::PARAM_INT);
         $consulta->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
         $consulta->execute();
-    }
-}
+    } */

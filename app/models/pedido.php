@@ -1,22 +1,26 @@
 <?php
-require_once './utils/mesa.php';
-class Pedido
-{
-    public $codigo;
-    public $nombre_cliente;
-    public $descripcion;
-    public $idMesa;
-    public $sector;
-    public $cantidad;
-    public $precio_total;
-    public $fecha_de_creacion;
-    public $tiempo_estimado;
 
-    public function __construct()
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Pedido extends Model
+{
+    protected $primaryKey = 'id';
+    protected $table = 'pedidos';
+    public $incrementing = true;
+    public $timestamps = false;
+    protected $fillable = [
+        'codigo', 'nombre_cliente', 'descripcion', 'idMesa', 'sector',
+        'cantidad', 'precio_total', 'fecha_de_creacion', 'fecha_de_modificacion', 'tiempo_estimado', 'estado'
+    ];
+}
+
+   /*  public function __construct()
     {
     }
 
-    public static function crearPedido($codigo, $nombre_cliente, $descripcion, $idMesa, $sector, $cantidad, $precio_total, $fecha_de_creacion, $tiempo_estimado)
+    public static function crearPedido($codigo, $nombre_cliente, $descripcion, $idMesa, $sector, $cantidad, $precio_total, $fecha_de_creacion, $tiempo_estimado, $estado)
     {
         $pedido = new Pedido();
         $pedido->codigo = $codigo;
@@ -28,6 +32,7 @@ class Pedido
         $pedido->precio_total = $precio_total;
         $pedido->fecha_de_creacion = $fecha_de_creacion;
         $pedido->tiempo_estimado = $tiempo_estimado;
+        $pedido->estado = $estado;
 
         return $pedido;
     }
@@ -35,8 +40,8 @@ class Pedido
     public function guardarPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (codigo, nombre_cliente ,descripcion, idMesa, sector, cantidad, precio_total, fecha_de_creacion, tiempo_estimado)
-         VALUES (:codigo, :nombre_cliente, :descripcion, :idMesa, :sector, :cantidad, :precio_total, :fecha_de_creacion, :tiempo_estimado)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (codigo, nombre_cliente ,descripcion, idMesa, sector, cantidad, precio_total, fecha_de_creacion, tiempo_estimado, estado)
+         VALUES (:codigo, :nombre_cliente, :descripcion, :idMesa, :sector, :cantidad, :precio_total, :fecha_de_creacion, :tiempo_estimado, :estado)");
         $consulta->bindValue(':codigo', $this->codigo, PDO::PARAM_STR);
         $consulta->bindValue(':nombre_cliente', $this->nombre_cliente, PDO::PARAM_STR);
         $consulta->bindValue(':descripcion', $this->descripcion, PDO::PARAM_STR);
@@ -46,6 +51,7 @@ class Pedido
         $consulta->bindValue(':precio_total', $this->precio_total, PDO::PARAM_INT);
         $consulta->bindValue(':fecha_de_creacion', $this->fecha_de_creacion, PDO::PARAM_STR);
         $consulta->bindValue(':tiempo_estimado', $this->tiempo_estimado, PDO::PARAM_STR);
+        $consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);
         $consulta->execute();
         return $objAccesoDatos->obtenerUltimoId();
     }
@@ -69,3 +75,4 @@ class Pedido
         return $consulta->fetchObject('Pedido');
     }
 }
+ */
