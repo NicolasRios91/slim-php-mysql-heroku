@@ -67,12 +67,18 @@ class UsuarioController implements IApiUsable
   // FALTA
   public function ModificarUno($request, $response, $args)
   {
-    $parametros = $request->getParsedBody();
+    $parametros = $request->getParsedBody()["body"];
+    $payload = json_encode(array("mensaje" => "No se modifico el usuario"));
 
-    $nombre = $parametros['nombre'];
-    Usuario::modificarUsuario($nombre);
-
-    $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
+    $nombre = $parametros["nombre"];
+    $nuevo_estado = $parametros["nuevo_estado"];
+    $usuario = Usuario::where('nombre', '=', $nombre)->first();
+    //var_dump($usuario);
+    if ($usuario && $nuevo_estado) {
+      $usuario->estado = $nuevo_estado;
+      $usuario->save();
+      $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
+    }
 
     $response->getBody()->write($payload);
     return $response
